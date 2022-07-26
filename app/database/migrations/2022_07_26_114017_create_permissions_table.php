@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreatePermissionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('tasks', function (Blueprint $table) {
-            $table->text('description')
-                    ->after('id')
-                    ->nullable();
+        Schema::create('permissions', function (Blueprint $table) {
+            $table->id();
+            $table->string('title')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -27,8 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('tasks', function (Blueprint $table) {
-            $table->dropColumn('description');
-        });
+        Schema::dropIfExists('permissions');
     }
-};
+}

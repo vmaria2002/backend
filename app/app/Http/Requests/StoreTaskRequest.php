@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
+
 
 class StoreTaskRequest extends FormRequest
 {
@@ -21,10 +23,12 @@ class StoreTaskRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+     public function rules()
     {
         return [
-            //
+            'description' => [
+                'required', 'string',
+            ]
         ];
     }
 }

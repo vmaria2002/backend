@@ -15,15 +15,32 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
-            <div>
-                <x-jet-label for="email" value="{{ __('Email') }}" />
-                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            </div>
+                        <div>
+                            <label for="email" class="block font-medium text-sm text-gray-700">Email</label>
+                            <input type="text" name="email" id="email" class="form-input rounded-md shadow-sm mt-1 block w-full"
+                                   value="{{ old('email', '') }}" />
+                            @error('email')
+                                <p class="text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-            <div class="mt-4">
+                        <div>
+                            <label for="password" class="block font-medium text-sm text-gray-700">Password</label>
+                            <input type="password" name="password" id="password" class="form-input rounded-md shadow-sm mt-1 block w-full"
+                                   value="{{ old('password', '') }}" />
+                            @error('password')
+                                <p class="text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+            <!-- <div>
+                <x-jet-label for="email" value="{{ __('Email') }}" />
+                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"  autofocus />
+            </div> -->
+
+            <!-- <div class="mt-4">
                 <x-jet-label for="password" value="{{ __('Password') }}" />
-                <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
-            </div>
+                <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password"  autocomplete="current-password" />
+            </div> -->
 
             <div class="block mt-4">
                 <label for="remember_me" class="flex items-center">

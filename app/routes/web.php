@@ -1,9 +1,13 @@
 <?php
 
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
+use App\Mail\TestMail;
+use app\Mail;
 use App\Http\Livewire\Crud;
 /*
+use 
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
@@ -35,3 +39,4 @@ Route::middleware([
 // Route::view('update', 'updateviewCRUD');
 
 Route::resource('tasks', \App\Http\Controllers\TaskController::class);
+Route::resource('users', \App\Http\Controllers\UserController::class);

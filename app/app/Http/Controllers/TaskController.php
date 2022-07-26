@@ -37,10 +37,21 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTaskRequest $request)
+    // public function store(StoreTaskRequest $request){
+    //     $this->authorize('update', $request->conversation);
+    //     $this->conversation->bestreply($request);
+    
+    //     Task::create($request->validate());
+    //     return redirect()->route('tasks.index');
+    // }
+
+    public function store(Request $request)
     {
-        Task::create($request->validate());
+        $student = new Task();
+        $student->description = $request->input('description');
+        $student->save();
         return redirect()->route('tasks.index');
+        // return redirect()->back()->with('status','Student Added Successfully');
     }
 
     /**
@@ -75,7 +86,9 @@ class TaskController extends Controller
     public function update(UpdateTaskRequest $request, Task $task)
     {
         $row=Task::find($task->id);
-        $row->update($request->validate());
+        $row->description=$request->description;
+        // $row->update($request->validate());
+        $row->save();
         return redirect()->route('tasks.index');
     }
 
@@ -87,7 +100,7 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        $task->delete();
-        return redirect()->route('tasks.index');
+         $task->delete();
+         return redirect()->route('tasks.index');
     }
 }

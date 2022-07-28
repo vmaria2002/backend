@@ -10,16 +10,38 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserController extends Controller
+class UsersController extends Controller
 {
     public function index()
     {
        
-
         $users = User::with('roles')->get();
 
         return view('users.index', compact('users'));
     }
+
+    // public function create()
+    // {
+       
+    //     $roles = Role::pluck('name', 'id');
+
+    //     return view('users.create', compact('roles'));
+    // }
+
+    // public function store(StoreUserRequest $request)
+    // {
+        
+        
+    //     // $user = User::create($request->validated());
+    //     $user=new User();
+    //     $user->name=$request->input('name');
+    //     $user->email=$request->input('email');
+    //     $user->password=$request->input('password');
+    //     // $user->roles()->sync($request->input('roles', []));
+    //     return redirect()->route('users.index');
+    // }
+
+
 
     public function create()
     {
@@ -40,16 +62,14 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        
         return view('users.show', compact('user'));
     }
 
     public function edit(User $user)
     {
-       abort_if(Gate::denies('users_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $roles = Role::pluck('title', 'id');
+      
+        $roles = Role::pluck('name', 'id');
 
         $user->load('roles');
 
@@ -66,8 +86,7 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        
         $user->delete();
 
         return redirect()->route('users.index');

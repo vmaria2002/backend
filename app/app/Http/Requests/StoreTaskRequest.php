@@ -15,7 +15,7 @@ class StoreTaskRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -27,7 +27,7 @@ class StoreTaskRequest extends FormRequest
     {
         return [
             'description' => [
-                'required', 'string',
+                'required', 'string', 'unique:tasks',
             ]
         ];
     }

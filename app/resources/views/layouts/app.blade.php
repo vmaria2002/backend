@@ -33,7 +33,10 @@
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                <!-- <div class="ok" style="text-align: center; font-size:20px; padding:32px">
+                    LogIn with success!!
+                </div> -->
+                 {{ $slot }}
             </main>
         </div>
 

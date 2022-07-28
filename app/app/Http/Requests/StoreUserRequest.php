@@ -20,19 +20,15 @@ class StoreUserRequest extends FormRequest
             ],
             'password' => [
                 'required',
+            
             ],
-            'roles.*'  => [
-                'integer',
-            ],
-            'roles'    => [
-                'required',
-                'array',
-            ],
+          
+           
         ];
     }
 
     public function authorize()
     {
-        return Gate::allows('user_access');
+       return true;
     }
 }

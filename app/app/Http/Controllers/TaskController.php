@@ -45,7 +45,7 @@ class TaskController extends Controller
     //     return redirect()->route('tasks.index');
     // }
 
-    public function store(Request $request)
+    public function store(StoreTaskRequest $request)
     {
         $student = new Task();
         $student->description = $request->input('description');

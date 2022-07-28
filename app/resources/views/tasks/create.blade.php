@@ -11,6 +11,8 @@
                 <form method="post" action="{{ route('tasks.store') }}">
                     @csrf
                     <div class="shadow overflow-hidden sm:rounded-md">
+                    
+
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <label for="description" class="block font-medium text-sm text-gray-700">Description</label>
                             <input type="text" name="description" id="description" type="text" class="form-input rounded-md shadow-sm mt-1 block w-full"
@@ -30,4 +32,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-app-layout> 

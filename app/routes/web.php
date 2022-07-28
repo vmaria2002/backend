@@ -39,4 +39,7 @@ Route::middleware([
 // Route::view('update', 'updateviewCRUD');
 
 Route::resource('tasks', \App\Http\Controllers\TaskController::class);
-Route::resource('users', \App\Http\Controllers\UserController::class);
+
+Route::resource('users', \App\Http\Controllers\UsersController::class);
+
+Route::resource('roles', \App\Http\Controllers\RoleController::class);

@@ -16,20 +16,19 @@ class UpdateUserRequest extends FormRequest
             ],
             'email'   => [
                 'required',
+                
+            ],
+            'password'   => [
+                'required',
                 'unique:users,email,' . request()->route('user')->id,
             ],
-            'roles.*' => [
-                'integer',
-            ],
-            'roles'   => [
-                'required',
-                'array',
-            ],
+          
+           
         ];
     }
 
     public function authorize()
     {
-        return Gate::allows('user_access');
+        return true;
     }
 }

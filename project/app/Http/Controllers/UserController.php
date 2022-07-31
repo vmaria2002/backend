@@ -14,38 +14,16 @@ class UserController extends Controller
 {
     public function index()
     {
-       
+        abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, "You don't have permission for access this page!! Sorry!");
+
         $users = User::with('roles')->get();
 
         return view('users.index', compact('users'));
     }
 
-    // public function create()
-    // {
-       
-    //     $roles = Role::pluck('name', 'id');
-
-    //     return view('users.create', compact('roles'));
-    // }
-
-    // public function store(StoreUserRequest $request)
-    // {
-        
-        
-    //     // $user = User::create($request->validated());
-    //     $user=new User();
-    //     $user->name=$request->input('name');
-    //     $user->email=$request->input('email');
-    //     $user->password=$request->input('password');
-    //     // $user->roles()->sync($request->input('roles', []));
-    //     return redirect()->route('users.index');
-    // }
-
-
-
     public function create()
     {
-
+        abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $roles = Role::pluck('title', 'id');
 
@@ -62,14 +40,15 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        
+        abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('users.show', compact('user'));
     }
 
     public function edit(User $user)
     {
-      
-        $roles = Role::pluck('name', 'id');
+        abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $roles = Role::pluck('title', 'id');
 
         $user->load('roles');
 
@@ -86,7 +65,8 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        
+        abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $user->delete();
 
         return redirect()->route('users.index');

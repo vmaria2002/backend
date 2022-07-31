@@ -5,7 +5,8 @@ use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use Illuminate\Http\Request;
 use App\Models\Task;
-
+use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class TaskController extends Controller
 {
@@ -72,7 +73,8 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit( Task $task)
-    {
+    {  
+          abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, "You don't have permission for access this page!! Sorry!");
         return view('tasks.edit', compact('task'));
     }
 
@@ -84,7 +86,9 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateTaskRequest $request, Task $task)
+
     {
+    
         $row=Task::find($task->id);
         $row->description=$request->description;
         // $row->update($request->validate());
@@ -99,7 +103,8 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Task $task)
-    {
+    { 
+         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, "You don't have permission for access this page!! Sorry!");
          $task->delete();
          return redirect()->route('tasks.index');
     }

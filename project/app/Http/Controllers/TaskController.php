@@ -15,11 +15,16 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
      
-        $tasks=Task::all();
+        // $tasks=Task::all();
+        // return view('tasks.index', compact('tasks'));
+
+        $tasks=Task::paginate(5);
         return view('tasks.index', compact('tasks'));
+
     }
 
     /**
@@ -74,7 +79,7 @@ class TaskController extends Controller
      */
     public function edit( Task $task)
     {  
-          abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, "You don't have permission for access this page!! Sorry!");
+         
         return view('tasks.edit', compact('task'));
     }
 

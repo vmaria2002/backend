@@ -9,21 +9,36 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\EmailNotification;
 
 class UserController extends Controller
+
 {
     public function index()
     {
+       
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, "You don't have permission for access this page!! Sorry!");
+        $users = User::with('roles')->paginate(5);
+        
+        $user = User::latest()->first();
 
-        $users = User::with('roles')->get();
-
+        // $project = [
+        //     'greeting' => 'Succes register!!Hi '.$user->name.',',
+        //     'body' => 'This is the project assigned to you.',
+        //     'thanks' => 'Thank you this is from codeanddeploy.com',
+        //     'actionText' => 'View Project',
+        //     'actionURL' => url('/'),
+        //     'id' => 1
+        // ];
+        // Notification::send($user, new EmailNotification($project));
+        // dd('Notification sent!');
         return view('users.index', compact('users'));
     }
 
     public function create()
     {
-        abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, "You don't have permission for access this page!! Sorry!");
 
         $roles = Role::pluck('title', 'id');
 
@@ -40,14 +55,13 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+       
         return view('users.show', compact('user'));
     }
 
     public function edit(User $user)
     {
-        abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, "You don't have permission for access this page!! Sorry!");
         $roles = Role::pluck('title', 'id');
 
         $user->load('roles');
@@ -65,10 +79,12 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, "You don't have permission for access this page!! Sorry!");
 
         $user->delete();
 
         return redirect()->route('users.index');
     }
 }
+
+

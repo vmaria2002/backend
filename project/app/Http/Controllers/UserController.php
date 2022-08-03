@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\EmailNotification;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 
@@ -18,7 +19,7 @@ class UserController extends Controller
     public function index()
     {
        
-        abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, "You don't have permission for access this page!! Sorry!");
+        
         $users = User::with('roles')->paginate(5);
         
         $user = User::latest()->first();
@@ -80,11 +81,22 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, "You don't have permission for access this page!! Sorry!");
+        if($user->id==Auth::user()->id) {
+            return back()->with('error', 'The error message here!');
+            // return redirect()->route('users.index');
+        }
 
         $user->delete();
 
         return redirect()->route('users.index');
     }
+    public function pericol(User $user)
+    {
+        
+
+        return redirect()->route('users.pericol');
+    }
 }
+
 
 

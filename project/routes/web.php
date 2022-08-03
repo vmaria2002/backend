@@ -20,9 +20,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes([
-'veify' => true
-]);
 
 Route::middleware([
     'auth:sanctum',
